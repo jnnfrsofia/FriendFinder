@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="container">
-        <!-- REQUIRE INFO -->
+        <!-- REQUIRED INFO -->
         <h1>Your Info</h1>
         <h4>Name (Required)</h4>
         <div class="input-group">
@@ -43,13 +43,13 @@
             <input type="text" class="form-control" id="imageLink" placeholder="Photo Link Here" aria-describedby="basic-addon1">
         </div>
         <hr>
-        <!-- QUESTIONS GO HERE -->
+        <!-- QUESTIONS DIV GOES HERE -->
         <h1>Friend Finder Quiz </h1>
         <div id="questions"></div>
         <button id="submit" type="button" class="btn btn-lg btn-primary">
             SUBMIT ANSWERS <span class="glyphicon glyphicon-triangle-right"></span> </button>
         
-        <!-- Modal Dialog Displaying Closest Friend Match -->
+        <!-- MODAL THAT WILL DISPLAY BEST FRIEND MATCH -->
         <div id="bestFriendModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -66,6 +66,7 @@
     </div>
     </div>
     <hr>
+
     <!--Links to data API and GitHub-->
     <p>
         <div class="text-center">
@@ -76,7 +77,7 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
-        // Questions listed in an array so they can be procedurally generated.
+        // questions listed in an array so they can be dynamically
         const questions = [
             'I prefer one-on-one conversations to large group settings.',
             'I prefer texting to talking on the phone.',
@@ -90,7 +91,7 @@
             'I enjoy gossiping.'
         ];
 
-        // Choices for personality questions.
+        // user choice options
         const choices = [
             '1 (Strongly Disagree)',
             '2',
@@ -99,36 +100,37 @@
             '5 (Strongly Agree)'
         ];
 
-        // Identify div where questions will be inserted and initialize counter to 0.
+        // grabs div where questions will be inserted and initialize counter to 0
         var questionDiv = $('#questions');
         i = 0;
 
-        // For each question, create a div.
+        //creates div for each question
         questions.forEach(function(question) {
             i++;
-            // Fill that div with a header, the question, and the choices selector.
+            // populate div with a header, the question, and the choices selector
             var item = $('<div class="question">');
             var headline = $('<h4>').text('Question ' + i);
             var questionText = $('<p>').text(question);
             var dropDown = $('<div class="form-group">');
             var select = $('<select class="form-control selector">');
-            // Create an option for each choice.
+            // create an option for each choice
             choices.forEach(function(choice) {
                 var option = $('<option>').text(choice);
                 select.append(option);
             });
+            //sets an ID for each choice option
             select.attr('id', 'select' + i);
-            // Add the dropdown to the item, then add the item to the questions div.
+            // adds the dropdown to the item, then adds the item to the questions div
             dropDown.append(select);
             item.append(headline, questionText, dropDown);
             var br = $('<br>');
             questionDiv.append(item, br);
         });
 
-        // Activate submit button
+        // activates submit button
         $('#submit').on('click', function(event) {
             event.preventDefault();
-            // Gather user inputs
+            // gather user inputs
             var userInput = {
                 name: $('#userName').val().trim(),
                 photo: $('#imageLink').val().trim(),
@@ -146,11 +148,11 @@
                 ]
             };
             // console.log('userInput = ' + JSON.stringify(userInput));
-            // Add user inputs to friends list
+            // adds user inputs to friends API
             $.post('/api/friends', userInput)
                 .done(function(data) {
                     // console.log('response = ' + JSON.stringify(data));
-                    // Set the name and image values of friend match
+                    // sets the name and image values of the best friend match
                     $("#bestFriendName").text(data.name);
                     $("#bestFriendImg").attr("src", data.photo);
                     $("#bestFriendModal").modal("show");

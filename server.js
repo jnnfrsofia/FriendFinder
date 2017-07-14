@@ -22,7 +22,7 @@
 
     app.use(express.static('public'));
 
-    //Import routes.
+    //import api routes
     require('./app/routing/apiRoutes')(app);
     require('./app/routing/htmlRoutes')(app);
 
