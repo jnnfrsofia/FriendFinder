@@ -1,0 +1,18 @@
+#friendIcon {
+	width: 100px;
+	height: 100px;
+}
+
+#bestFriendImg {
+	width: 500px;
+	height: 500px;
+}
+
+body {
+font-family: 'Playfair Display', serif;
+
+}
+
+h4 {
+	font-weight: bold;
+}
